@@ -1,0 +1,15 @@
+{
+    "require": {
+        "phpunit/phpunit": "^7.5",
+        "ext-pdo": "*",
+        "silex/silex": "~2.0",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Trial\\CoffeeMachine\\": "src",
+            "Trial\\CoffeeMachine\\Tests\\Unit\\": "tests/Unit",
+            "Trial\\CoffeeMachine\\Tests\\Integration\\": "tests/Integration"
+        }
+    }
+}
