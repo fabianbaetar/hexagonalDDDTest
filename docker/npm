@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker run -it --rm \
+    --name my-running-ng-cli \
+    -v "$PWD"/front:/usr/src/myapp \
+    -w /usr/src/myapp \
+    node:12.14.1-alpine npm $@

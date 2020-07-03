@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+    mysql:
+        image: coffee-machine.mysql
+        container_name: coffee-machine.mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: 'coffee_machine'
+            MYSQL_DATABASE: 'coffee_machine'
+            MYSQL_USER: 'coffee_machine'
+            MYSQL_PASSWORD: 'coffee_machine'
+        ports:
+            - "3305:3306"
+        networks:
+            coffee-machine_net:
+                ipv4_address: 172.50.0.3
+        tty: true
+
+
+    api_web_server:
+        image: nginx:1.10
+        volumes:
+            - ./api/:/var/www
+            - ./docker/images/nginx/conf/vhost.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - "9080:80"
+        networks:
+            coffee-machine_net:
+                ipv4_address: 172.50.0.4
+
+    api_app:
+        image: coffee-machine.php
+        container_name: coffee-machine.php
+        volumes:
+            - ./api/:/var/www
+        networks:
+            coffee-machine_net:
+                ipv4_address: 172.50.0.5
+
+    ng_server:
+        image: coffee-machine.ng
+        container_name: coffee-machine.ng
+        volumes:
+            - ./front/:/usr/src/myapp
+        ports:
+            - "4200:4200"
+        command: ["ng", "serve", "--host", "0.0.0.0"]
+
+
+networks:
+    coffee-machine_net:
+        external: true
